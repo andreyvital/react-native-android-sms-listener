@@ -17,15 +17,15 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
     public SmsListenerModule(ReactApplicationContext context, Activity activity) {
         super(context);
 
-        this.mActivity = activity;
-        this.mReceiver = new SmsReceiver(context);
+        mActivity = activity;
+        mReceiver = new SmsReceiver(context);
 
-        registerReceiverIfNecessary(this.mReceiver);
+        registerReceiverIfNecessary(mReceiver);
     }
 
     private void registerReceiverIfNecessary(BroadcastReceiver receiver) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            this.mActivity.registerReceiver(
+            mActivity.registerReceiver(
                 receiver,
                 new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
             );
@@ -33,29 +33,29 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
             return;
         }
 
-        this.mActivity.registerReceiver(
+        mActivity.registerReceiver(
             receiver,
             new IntentFilter("android.provider.Telephony.SMS_RECEIVED")
         );
     }
 
     private void unregisterReceiver(BroadcastReceiver receiver) {
-        this.mActivity.unregisterReceiver(receiver);
+        mActivity.unregisterReceiver(receiver);
     }
 
     @Override
     public void onHostResume() {
-        registerReceiverIfNecessary(this.mReceiver);
+        registerReceiverIfNecessary(mReceiver);
     }
 
     @Override
     public void onHostPause() {
-        unregisterReceiver(this.mReceiver);
+        unregisterReceiver(mReceiver);
     }
 
     @Override
     public void onHostDestroy() {
-        unregisterReceiver(this.mReceiver);
+        unregisterReceiver(mReceiver);
     }
 
     @Override

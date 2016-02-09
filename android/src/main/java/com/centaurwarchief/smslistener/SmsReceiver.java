@@ -23,15 +23,15 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     public SmsReceiver(ReactApplicationContext context) {
-        this.mContext = context;
+        mContext = context;
     }
 
     private void receiveMessage(SmsMessage message) {
-        if (this.mContext == null) {
+        if (mContext == null) {
             return;
         }
 
-        if (! this.mContext.hasActiveCatalystInstance()) {
+        if (! mContext.hasActiveCatalystInstance()) {
             return;
         }
 
@@ -40,7 +40,7 @@ public class SmsReceiver extends BroadcastReceiver {
         receivedMessage.putString("originatingAddress", message.getOriginatingAddress());
         receivedMessage.putString("body", message.getMessageBody());
 
-        this.mContext
+        mContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(EVENT, receivedMessage);
     }

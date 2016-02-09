@@ -18,7 +18,7 @@ public class SmsListener implements ReactPackage {
     private Activity mActivity;
 
     public SmsListener(Activity activity) {
-        this.mActivity = activity;
+        mActivity = activity;
     }
 
     @Override
