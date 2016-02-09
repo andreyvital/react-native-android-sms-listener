@@ -12,3 +12,5 @@ gradle.properties
 .idea
 ./build.gradle
 settings.gradle
+gradle/
+build/
