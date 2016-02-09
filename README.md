@@ -26,6 +26,37 @@ let subscription = SmsListener.addListener(...)
 subscription.remove()
 ```
 
+##### Example of using it for verification purposes:
+```JS
+let subscription = SmsListener.addListener(message => {
+  let verificationCodeRegex = /Your verification code: ([\d]{6})/
+
+  if (verificationCodeRegex.test(message.body)) {
+    let verificationCode = message.body.match(verificationCodeRegex)[1]
+
+    YourPhoneVerificationApi.verifyPhoneNumber(
+      message.originatingAddress,
+      verificationCode
+    ).then(verifiedSuccessfully => {
+      if (verifiedSuccessfully) {
+        subscription.remove()
+        return
+      }
+
+      if (__DEV__) {
+        console.info(
+          'Failed to verify phone `%s` using code `%s`',
+          message.originatingAddress,
+          verificationCode
+        )
+      }
+    })
+  }
+})
+```
+
+If you're using Twilio or a similar third-party messaging service which you have a fixed phone number to deliver messages you might want to ensure that the message comes from your service by checking `message.originatingAddress`.
+
 ### Installation
 ```SH
 $ npm install --save react-native-android-sms-listener
