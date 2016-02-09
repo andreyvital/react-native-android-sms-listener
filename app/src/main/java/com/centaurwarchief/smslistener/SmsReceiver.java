@@ -14,14 +14,23 @@ import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class SmsReceiver extends BroadcastReceiver {
-    private static final String EVENT = "com.centaurwarchief.smslistener:smsReceived";
     private ReactApplicationContext mContext;
+
+    private static final String EVENT = "com.centaurwarchief.smslistener:smsReceived";
+
+    public SmsReceiver() {
+        super();
+    }
 
     public SmsReceiver(ReactApplicationContext context) {
         this.mContext = context;
     }
 
     private void receiveMessage(SmsMessage message) {
+        if (this.mContext == null) {
+            return;
+        }
+
         if (! this.mContext.hasActiveCatalystInstance()) {
             return;
         }
