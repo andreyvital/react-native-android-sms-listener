@@ -1,0 +1,5 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.centaurwarchief.smslistener">
+    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+</manifest>
