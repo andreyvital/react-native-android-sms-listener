@@ -41,14 +41,14 @@ public class SmsReceiver extends BroadcastReceiver {
         receivedMessage.putString("body", message.getMessageBody());
 
         this.mContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(EVENT, receivedMessage);
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(EVENT, receivedMessage);
     }
 
     private void logReceivedMessage(SmsMessage message) {
         Log.d(
-                SmsListener.TAG,
-                String.format("%s: %s", message.getOriginatingAddress(), message.getMessageBody())
+            SmsListener.TAG,
+            String.format("%s: %s", message.getOriginatingAddress(), message.getMessageBody())
         );
     }
 
@@ -93,6 +93,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 receiveMessage(message);
             }
         } catch (Exception e) {
+            Log.e(SmsListener.TAG, e.getMessage());
         }
     }
 }

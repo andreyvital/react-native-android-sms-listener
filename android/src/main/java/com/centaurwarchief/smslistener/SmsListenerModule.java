@@ -23,17 +23,24 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
         registerReceiverIfNecessary(this.mReceiver);
     }
 
-    private void unregisterReceiver(BroadcastReceiver receiver) {
-        this.mActivity.unregisterReceiver(receiver);
-    }
-
     private void registerReceiverIfNecessary(BroadcastReceiver receiver) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             this.mActivity.registerReceiver(
-                    receiver,
-                    new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
+                receiver,
+                new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
             );
+
+            return;
         }
+
+        this.mActivity.registerReceiver(
+            receiver,
+            new IntentFilter("android.provider.Telephony.SMS_RECEIVED")
+        );
+    }
+
+    private void unregisterReceiver(BroadcastReceiver receiver) {
+        this.mActivity.unregisterReceiver(receiver);
     }
 
     @Override

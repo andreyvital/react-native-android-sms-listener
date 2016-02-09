@@ -24,7 +24,7 @@ public class SmsListener implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext context) {
         return Arrays.<NativeModule>asList(
-                new SmsListenerModule(context, this.mActivity)
+            new SmsListenerModule(context, this.mActivity)
         );
     }
 
