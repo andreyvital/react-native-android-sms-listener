@@ -1,0 +1,25 @@
+{
+  "name": "react-native-android-sms-listener",
+  "version": "0.1.0",
+  "description": "Allows you to listen for incoming SMS messages",
+  "license": "MIT",
+  "main": "index.js",
+  "author": {
+    "name": "Andrey K. Vital",
+    "email": "andreykvital@gmail.com",
+    "url": "https://github.com/CentaurWarchief"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CentaurWarchief/react-native-android-sms-listener.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "react-native",
+    "android",
+    "sms",
+    "listener",
+    "sms-listener"
+  ]
+}
