@@ -37,7 +37,7 @@ let subscription = SmsListener.addListener(message => {
     let verificationCode = message.body.match(verificationCodeRegex)[1]
 
     YourPhoneVerificationApi.verifyPhoneNumber(
-      message.originatingAddress,
+      ...,
       verificationCode
     ).then(verifiedSuccessfully => {
       if (verifiedSuccessfully) {
@@ -48,7 +48,7 @@ let subscription = SmsListener.addListener(message => {
       if (__DEV__) {
         console.info(
           'Failed to verify phone `%s` using code `%s`',
-          message.originatingAddress,
+          ...,
           verificationCode
         )
       }
