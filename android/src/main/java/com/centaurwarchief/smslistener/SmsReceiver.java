@@ -35,6 +35,11 @@ public class SmsReceiver extends BroadcastReceiver {
             return;
         }
 
+        Log.d(
+            SmsListener.TAG,
+            String.format("%s: %s", message.getOriginatingAddress(), message.getMessageBody())
+        );
+
         WritableNativeMap receivedMessage = new WritableNativeMap();
 
         receivedMessage.putString("originatingAddress", message.getOriginatingAddress());
@@ -45,24 +50,12 @@ public class SmsReceiver extends BroadcastReceiver {
             .emit(EVENT, receivedMessage);
     }
 
-    private void logReceivedMessage(SmsMessage message) {
-        Log.d(
-            SmsListener.TAG,
-            String.format("%s: %s", message.getOriginatingAddress(), message.getMessageBody())
-        );
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            SmsMessage[] messages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
-
-            if (messages.length == 0) {
-                return;
+            for (SmsMessage message : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
+                receiveMessage(message);
             }
-
-            logReceivedMessage(messages[0]);
-            receiveMessage(messages[0]);
 
             return;
         }
@@ -70,27 +63,14 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
             final Bundle bundle = intent.getExtras();
 
-            if (bundle == null) {
-                return;
-            }
-
-            if (! bundle.containsKey("pdus")) {
+            if (bundle == null || ! bundle.containsKey("pdus")) {
                 return;
             }
 
             final Object[] pdus = (Object[]) bundle.get("pdus");
 
             for (Object pdu : pdus) {
-                SmsMessage message;
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    message = SmsMessage.createFromPdu((byte[]) pdu, bundle.getString("format"));
-                } else {
-                    message = SmsMessage.createFromPdu((byte[]) pdu);
-                }
-
-                logReceivedMessage(message);
-                receiveMessage(message);
+                receiveMessage(SmsMessage.createFromPdu((byte[]) pdu));
             }
         } catch (Exception e) {
             Log.e(SmsListener.TAG, e.getMessage());
