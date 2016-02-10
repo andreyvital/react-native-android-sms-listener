@@ -4,3 +4,5 @@ local.properties
 react-native-android-sms-listener.iml
 settings.gradle
 android/build
+README.md
+gen/
