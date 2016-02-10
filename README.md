@@ -1,5 +1,5 @@
 ## `react-native-android-sms-listener` [![react-native-android-sms-listener](https://badge.fury.io/js/react-native-android-sms-listener.svg)](https://badge.fury.io/js/react-native-android-sms-listener)
-An utility that allows you to listen for incoming SMS messages. You'll probably use it if you're developing an application and in its sign up process you have phone number verification step which is usually done by sending a verification code via SMS to the specified number, so when the user receive the message with the code you can automatically intercept it and verify it &mdash; what an awesome UX huh?
+An utility that allows you to listen for incoming SMS messages.
 
 ### Example
 ```JS
@@ -27,6 +27,8 @@ subscription.remove()
 ```
 
 ##### Example of using it for verification purposes:
+...and if in your sign up process you have the phone number verification step which is done by sending a code via SMS to the specified phone, you might want to verify it automatically when the user receive it &mdash; pretty much like what Telegram or WhatsApp does:
+
 ```JS
 let subscription = SmsListener.addListener(message => {
   let verificationCodeRegex = /Your verification code: ([\d]{6})/
