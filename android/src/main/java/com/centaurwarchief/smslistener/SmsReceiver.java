@@ -8,15 +8,15 @@ import android.os.Bundle;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
-
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class SmsReceiver extends BroadcastReceiver {
-    private ReactApplicationContext mContext;
-
     private static final String EVENT = "com.centaurwarchief.smslistener:smsReceived";
+
+    private ReactApplicationContext mContext;
 
     public SmsReceiver() {
         super();
@@ -36,7 +36,7 @@ public class SmsReceiver extends BroadcastReceiver {
         }
 
         Log.d(
-            SmsListener.TAG,
+            ReactConstants.TAG,
             String.format("%s: %s", message.getOriginatingAddress(), message.getMessageBody())
         );
 
@@ -73,7 +73,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 receiveMessage(SmsMessage.createFromPdu((byte[]) pdu));
             }
         } catch (Exception e) {
-            Log.e(SmsListener.TAG, e.getMessage());
+            Log.e(ReactConstants.TAG, e.getMessage());
         }
     }
 }

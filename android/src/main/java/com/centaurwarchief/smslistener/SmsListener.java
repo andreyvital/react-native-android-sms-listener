@@ -1,7 +1,6 @@
 package com.centaurwarchief.smslistener;
 
 import android.app.Activity;
-
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -13,8 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class SmsListener implements ReactPackage {
-    public static final String TAG = "SmsListener";
-
     private Activity mActivity;
 
     public SmsListener(Activity activity) {

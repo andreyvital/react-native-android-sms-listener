@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.provider.Telephony;
-
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
