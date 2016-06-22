@@ -5,11 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.provider.Telephony;
+import android.util.Log;
+
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
 public class SmsListenerModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
+    private static final String TAG = "SmsListenerModule";
     private BroadcastReceiver mReceiver;
     private Activity mActivity;
 
@@ -40,7 +43,11 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
     }
 
     private void unregisterReceiver(BroadcastReceiver receiver) {
+      try{
         mActivity.unregisterReceiver(receiver);
+      } catch( Exception e){
+          Log.d(TAG, e.toString());
+      }
     }
 
     @Override
