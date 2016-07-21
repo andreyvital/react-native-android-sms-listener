@@ -1,6 +1,6 @@
 {
   "name": "react-native-android-sms-listener",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Allows you to listen for incoming SMS messages",
   "license": "MIT",
   "main": "index.js",

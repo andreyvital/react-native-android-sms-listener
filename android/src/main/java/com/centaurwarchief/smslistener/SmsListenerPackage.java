@@ -1,6 +1,7 @@
 package com.centaurwarchief.smslistener;
 
 import android.app.Activity;
+
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -11,17 +12,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class SmsListener implements ReactPackage {
-    private Activity mActivity;
-
-    public SmsListener(Activity activity) {
-        mActivity = activity;
-    }
+public class SmsListenerPackage implements ReactPackage {
+    static final String TAG = "SmsListenerPackage";
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext context) {
-        return Arrays.<NativeModule>asList(
-            new SmsListenerModule(context, mActivity)
+        return Collections.<NativeModule>singletonList(
+                new SmsListenerModule(context)
         );
     }
 
