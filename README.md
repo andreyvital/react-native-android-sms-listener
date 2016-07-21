@@ -87,7 +87,7 @@ dependencies {
 
 *MainApplication.java*
 ```Java
-import com.centaurwarchief.smslistener.SmsListener;
+import com.centaurwarchief.smslistener;
 ```
 
 ```Java
@@ -95,7 +95,7 @@ import com.centaurwarchief.smslistener.SmsListener;
 protected List<ReactPackage> getPackages() {
   return Arrays.<ReactPackage>asList(
     new MainReactPackage(),
-    new SmsListener(this)
+    new SmsListener()
     // (...)
   );
 }
