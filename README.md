@@ -68,9 +68,9 @@ $ npm install --save react-native-android-sms-listener
 
 *android/settings.gradle*
 ```Gradle
-include ':ReactNativeAndroidSmsListener'
+include ':react-native-android-sms-listener'
 
-project(':ReactNativeAndroidSmsListener').projectDir = new File(
+project(':react-native-android-sms-listener').projectDir = new File(
   rootProject.projectDir,
   '../node_modules/react-native-android-sms-listener/android'
 )
@@ -79,14 +79,14 @@ project(':ReactNativeAndroidSmsListener').projectDir = new File(
 *android/app/build.gradle*
 ```Gradle
 dependencies {
-  compile project(':ReactNativeAndroidSmsListener')
+  compile project(':react-native-android-sms-listener')
   // (...)
 }
 ```
 
-*MainActivity.java*
+*MainApplication.java*
 ```Java
-import com.centaurwarchief.smslistener.SmsListener;
+import com.centaurwarchief.smslistener.SmsListenerPackage;
 ```
 
 ```Java
@@ -94,7 +94,7 @@ import com.centaurwarchief.smslistener.SmsListener;
 protected List<ReactPackage> getPackages() {
   return Arrays.<ReactPackage>asList(
     new MainReactPackage(),
-    new SmsListener(this)
+    new SmsListenerPackage()
     // (...)
   );
 }
