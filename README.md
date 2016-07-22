@@ -83,6 +83,25 @@ dependencies {
   // (...)
 }
 ```
+##RN >= 0.29
+
+*MainApplication.java*
+```Java
+import com.centaurwarchief.smslistener;
+```
+
+```Java
+@Override
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+    new MainReactPackage(),
+    new SmsListener()
+    // (...)
+  );
+}
+```
+
+##RN < 0.28
 
 *MainActivity.java*
 ```Java
