@@ -15,6 +15,7 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
 
     public SmsListenerModule(ReactApplicationContext context) {
         super(context);
+        context.addLifecycleEventListener(this);
 
         mReceiver = new SmsReceiver(context);
         registerReceiverIfNecessary(mReceiver);
