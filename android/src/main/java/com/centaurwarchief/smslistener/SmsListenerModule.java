@@ -12,6 +12,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
 public class SmsListenerModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
     private BroadcastReceiver mReceiver;
+    private boolean isReceiverRegistered = false;
 
     public SmsListenerModule(ReactApplicationContext context) {
         super(context);
@@ -27,7 +28,7 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
                 receiver,
                 new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)
             );
-
+            isReceiverRegistered = true;
             return;
         }
 
@@ -36,12 +37,14 @@ public class SmsListenerModule extends ReactContextBaseJavaModule implements Lif
                     receiver,
                     new IntentFilter("android.provider.Telephony.SMS_RECEIVED")
             );
+            isReceiverRegistered = true;
         }
     }
 
     private void unregisterReceiver(BroadcastReceiver receiver) {
-        if (getCurrentActivity() != null) {
+        if (isReceiverRegistered && getCurrentActivity() != null) {
             getCurrentActivity().unregisterReceiver(receiver);
+            isReceiverRegistered = false;
         }
     }
 
