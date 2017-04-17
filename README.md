@@ -83,7 +83,7 @@ dependencies {
   // (...)
 }
 ```
-##RN >= 0.29
+## RN >= 0.29
 
 *MainApplication.java*
 ```Java
@@ -101,7 +101,7 @@ protected List<ReactPackage> getPackages() {
 }
 ```
 
-##RN < 0.28
+## RN < 0.28
 
 *MainApplication.java*
 ```Java
