@@ -62,18 +62,16 @@ If you're using Twilio or a similar third-party messaging service which you have
 ### Installation
 ```SH
 $ npm install --save react-native-android-sms-listener
+$ react-native link react-native-android-sms-listener
 ```
 
-...and all you need to do to use this so-called utility is:
+### Manual Installation
+For a manual installation, all you need to do to use this so-called utility is:
 
 *android/settings.gradle*
 ```Gradle
 include ':react-native-android-sms-listener'
-
-project(':react-native-android-sms-listener').projectDir = new File(
-  rootProject.projectDir,
-  '../node_modules/react-native-android-sms-listener/android'
-)
+project(':react-native-android-sms-listener').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-android-sms-listener/android')
 ```
 
 *android/app/build.gradle*
@@ -83,25 +81,6 @@ dependencies {
   // (...)
 }
 ```
-## RN >= 0.29
-
-*MainApplication.java*
-```Java
-import com.centaurwarchief.smslistener;
-```
-
-```Java
-@Override
-protected List<ReactPackage> getPackages() {
-  return Arrays.<ReactPackage>asList(
-    new MainReactPackage(),
-    new SmsListener()
-    // (...)
-  );
-}
-```
-
-## RN < 0.28
 
 *MainApplication.java*
 ```Java
