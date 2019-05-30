@@ -1,5 +1,5 @@
 ## `react-native-android-sms-listener` [![react-native-android-sms-listener](https://badge.fury.io/js/react-native-android-sms-listener.svg)](https://badge.fury.io/js/react-native-android-sms-listener)
-An utility that allows you to listen for incoming SMS messages.
+A utility that allows you to listen for incoming SMS messages.
 
 ### Example
 ```JS
