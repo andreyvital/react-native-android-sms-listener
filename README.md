@@ -14,7 +14,8 @@ The contents of `message` object will be:
 ```JS
 {
   originatingAddress: string,
-  body: string
+  body: string,
+  timestamp: number
 }
 ```
 
