@@ -26,7 +26,7 @@ public class SmsReceiver extends BroadcastReceiver {
         mContext = context;
     }
 
-    private void receiveMessage(SmsMessage message) {
+    private void receiveMessage(SmsMessage message, String body) {
         if (mContext == null) {
             return;
         }
@@ -43,19 +43,37 @@ public class SmsReceiver extends BroadcastReceiver {
         WritableNativeMap receivedMessage = new WritableNativeMap();
 
         receivedMessage.putString("originatingAddress", message.getOriginatingAddress());
-        receivedMessage.putString("body", message.getMessageBody());
+        receivedMessage.putString("body", body.length() > 0 ? body : message.getMessageBody());
+        receivedMessage.putDouble("timestamp", message.getTimestampMillis());
 
         mContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(EVENT, receivedMessage);
     }
 
+    private void receiveMultipartMessage(SmsMessage[] messages) {
+        SmsMessage sms = messages[0];
+        String body;
+
+        if (messages.length == 1 || sms.isReplace()) {
+            body = sms.getDisplayMessageBody();
+        } else {
+            StringBuilder bodyText = new StringBuilder();
+
+            for (SmsMessage message : messages) {
+                bodyText.append(message.getMessageBody());
+            }
+
+            body = bodyText.toString();
+        }
+
+        receiveMessage(sms, body);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            for (SmsMessage message : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                receiveMessage(message);
-            }
+            receiveMultipartMessage(Telephony.Sms.Intents.getMessagesFromIntent(intent));
 
             return;
         }
@@ -68,10 +86,13 @@ public class SmsReceiver extends BroadcastReceiver {
             }
 
             final Object[] pdus = (Object[]) bundle.get("pdus");
+            final SmsMessage[] messages = new SmsMessage[pdus.length];
 
-            for (Object pdu : pdus) {
-                receiveMessage(SmsMessage.createFromPdu((byte[]) pdu));
+            for (int i = 0; i < pdus.length; i++) {
+                messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
             }
+
+            receiveMultipartMessage(messages);
         } catch (Exception e) {
             Log.e(SmsListenerPackage.TAG, e.getMessage());
         }
