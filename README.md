@@ -1,7 +1,9 @@
 ## `react-native-android-sms-listener` [![react-native-android-sms-listener](https://badge.fury.io/js/react-native-android-sms-listener.svg)](https://badge.fury.io/js/react-native-android-sms-listener)
+
 A utility that allows you to listen for incoming SMS messages.
 
 ### Example
+
 ```JS
 import SmsListener from 'react-native-android-sms-listener'
 
@@ -11,6 +13,7 @@ SmsListener.addListener(message => {
 ```
 
 The contents of `message` object will be:
+
 ```JS
 {
   originatingAddress: string,
@@ -27,7 +30,34 @@ let subscription = SmsListener.addListener(...)
 subscription.remove()
 ```
 
-##### Example of using it for verification purposes:
+In recent versions of Android you might also have to ask for permissions:
+
+```JS
+async function requestReadSmsPermission() {
+  try {
+    await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_SMS,
+      {
+        title: "(...)",
+        message: "Why you're asking for..."
+      }
+    );
+  } catch (err) {}
+}
+
+class MyComponent extends Component {
+  // ...
+
+  componentDidMount() {
+    requestReadSmsPermission();
+  }
+
+  // ...
+}
+```
+
+### Example of using it for verification purposes:
+
 ...and if in your sign up process you have the phone number verification step which is done by sending a code via SMS to the specified phone, you might want to verify it automatically when the user receive it &mdash; pretty much like what Telegram or WhatsApp does:
 
 ```JS
@@ -61,21 +91,25 @@ let subscription = SmsListener.addListener(message => {
 If you're using Twilio or a similar third-party messaging service which you have a fixed phone number to deliver messages you might want to ensure that the message comes from your service by checking `message.originatingAddress`.
 
 ### Installation
+
 ```SH
 $ npm install --save react-native-android-sms-listener
 $ react-native link react-native-android-sms-listener
 ```
 
 ### Manual Installation
+
 For a manual installation, all you need to do to use this so-called utility is:
 
-*android/settings.gradle*
+_android/settings.gradle_
+
 ```Gradle
 include ':react-native-android-sms-listener'
 project(':react-native-android-sms-listener').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-android-sms-listener/android')
 ```
 
-*android/app/build.gradle*
+_android/app/build.gradle_
+
 ```Gradle
 dependencies {
   compile project(':react-native-android-sms-listener')
@@ -83,7 +117,8 @@ dependencies {
 }
 ```
 
-*MainApplication.java*
+_MainApplication.java_
+
 ```Java
 import com.centaurwarchief.smslistener.SmsListenerPackage;
 ```
